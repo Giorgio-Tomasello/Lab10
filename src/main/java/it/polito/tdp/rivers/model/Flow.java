@@ -33,6 +33,6 @@ public class Flow {
 	public String toString() {
 		return "Flow [day=" + day + ", flow=" + flow + ", river=" + river + "]";
 	}
-
+	
 	
 }

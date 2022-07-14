@@ -35,10 +35,12 @@ public class River {
 	}
 	
 	public double getFlowAvg() {
+
 		return flowAvg;
 	}
 
 	public void setFlowAvg(double flowAvg) {
+		
 		this.flowAvg = flowAvg;
 	}
 

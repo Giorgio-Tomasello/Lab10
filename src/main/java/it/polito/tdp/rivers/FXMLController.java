@@ -5,11 +5,13 @@
 package it.polito.tdp.rivers;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.rivers.model.Flow;
 import it.polito.tdp.rivers.model.Model;
 import it.polito.tdp.rivers.model.River;
+import it.polito.tdp.rivers.model.SimulationResult;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -53,18 +55,18 @@ public class FXMLController {
     @FXML
     void scegliFiume(ActionEvent event) {
     	
-    //	txtStartDate.setText(model.getFlows(boxRiver.getValue().getId()).size());
-    	int size = model.getFlows(boxRiver.getValue().getId()).size();
-    	double media=0.0;
     	
-    	txtStartDate.setText(model.getFlows(boxRiver.getValue().getId()).get(0).getDay().toString());
-    	txtEndDate.setText(model.getFlows(boxRiver.getValue().getId()).get(size-1).getDay().toString());
+    	
+    	//txtStartDate.setText(model.getFlows(boxRiver.getValue().getId()).size());
+    	int size = model.getFlows(boxRiver.getValue().getId()).size();
+    	LocalDate inizio = model.getFlows(boxRiver.getValue().getId()).get(0).getDay();
+    	LocalDate fine = model.getFlows(boxRiver.getValue().getId()).get(size-1).getDay();
+    	double media = model.getMediaFlow(boxRiver.getValue().getId());
+    	
+    	
+    	txtStartDate.setText(inizio.toString());
+    	txtEndDate.setText(fine.toString());
     	txtNumMeasurements.setText(""+size);
-    	for(Flow f : model.getFlows(boxRiver.getValue().getId()))
-    			{
-    			media +=f.getFlow();
-    			}
-    	media = media/size;
     	txtFMed.setText(""+media);
     	
 
@@ -72,6 +74,15 @@ public class FXMLController {
     
     @FXML
     void handleSimula(ActionEvent event) {
+    	
+    	double k = Double.parseDouble(txtK.getText());
+    	SimulationResult sr = model.simulate(boxRiver.getValue(), k);
+    	
+    	txtResult.setText("Numero di giorni critici: " + sr.getNumberOfDays());
+    	
+    	txtResult.appendText("\nOccupazione media del bacino: " + sr.getAvgC());
+    	
+    	
 
     }
 
